@@ -2,12 +2,15 @@
   "name": "genesis-tubs-engine",
   "version": "1.0.0",
   "description": "---",
-  "main": "index.js",
+  "main": "./src/index.js",
   "directories": {
     "test": "tests"
   },
   "scripts": {
-    "test": "electron ./tests/test-env/main.js"
+    "test-env": "electron ./tests/test-env/main.js",
+    "test-vue": "cd ./tests/vue-test && npm run dev",
+    "build": "babel ./src --out-dir lib",
+    "prepare": "npm run build"
   },
   "author": "mauicv",
   "license": "ISC",

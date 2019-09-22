@@ -21,7 +21,10 @@ function createWindow () {
   mainWindow.loadFile('index.html')
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools()
+  // mainWindow.webContents.openDevTools()
+
+  // maximize window
+  mainWindow.maximize()
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {

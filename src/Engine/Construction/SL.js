@@ -15,19 +15,19 @@ var SL = module.exports = {
   	});
   },
 
-  load: function(fileName){
+  load: function(fileName) {
+    var loc = window.location.pathname;
+    var dir = loc.substring(0, loc.lastIndexOf('/'));
+    var Data_string = fs.readFileSync(`${dir}/${fileName}`,  'utf8');
+    return this.parse(Data_string)
+  },
 
+  parse: function(Data_string){
     const pl = modules.getModule('SpaceTime');
     const builder = modules.getModule('Builder');
     const Features = modules.getModule('featureInstances');
     const Laws = modules.getModule('lawInstances');
-
-    var loc = window.location.pathname;
-    var dir = loc.substring(0, loc.lastIndexOf('/'));
-
-    var Data_string = fs.readFileSync(`${dir}/${fileName}`,  'utf8');
     data = JSON.parse(Data_string);
-    console.log(data);
     build = new builder();
 
     data.points.forEach(function(point){
