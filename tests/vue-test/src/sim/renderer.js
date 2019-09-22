@@ -2,15 +2,15 @@
 // be executed in the renderer process for that window.
 // All of the Node.js APIs are available in this process.
 
-const modules = require('../../../../src/moduleHandler.js');
-const gm = modules.getModule('GeneralMethods');
-const cr=modules.getModule('CollisionResponse');
-const sl=modules.getModule('SL');
-const Features = modules.getModule('featureInstances');
-const Laws = modules.getModule('lawInstances');
-const Beam = modules.getModule('Beam');
-const Line = modules.getModule('Line');
-const Particle = modules.getModule('Particle');
+const engine = require('genesis-tubs-engine')
+const gm = engine.GeneralMethods;
+const cr = engine.CollisionResponse;
+const sl = engine.SL;
+const Features = engine.featureInstances;
+const Laws = engine.lawInstances;
+const Beam = engine.Beam;
+const Line = engine.Line;
+const Particle = engine.Particle;
 
 //load test
 import Data_string from './ship.txt'
@@ -38,10 +38,6 @@ export default {
 
 		enviro.structures[5].fix()
 		enviro.structures[9].fix()
-
-
-
-		console.log(enviro)
 
 		window.main = function () {
 			window.requestAnimationFrame( main );

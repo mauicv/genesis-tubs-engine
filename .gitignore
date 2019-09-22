@@ -1,6 +1,8 @@
 node_modules
 .DS_Store
 
+lib
+
 /tests/vue-test/node_modules/
 /tests/vue-test/dist/
 /tests/vue-test/npm-debug.log*
