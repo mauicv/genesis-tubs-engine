@@ -1,0 +1,17 @@
+{
+  "name": "genesis-tubs-engine",
+  "version": "1.0.0",
+  "description": "---",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "electron ./tests/test-env/main.js"
+  },
+  "author": "mauicv",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^6.0.10"
+  }
+}
