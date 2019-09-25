@@ -24,7 +24,7 @@ const LawInstances= modules.getModule('lawInstances');
 
 module.exports =class build{
   constructor(environmentName){
-    this.environment=new pl(environmentName,this);
+    this.environment=new pl(environmentName, this);
     this.environment.laws.finite=LawInstances["finite"];
     this.environment.laws.gravity=LawInstances["gravity"];
     this.environment.laws.airResistance=LawInstances["airResistance"];

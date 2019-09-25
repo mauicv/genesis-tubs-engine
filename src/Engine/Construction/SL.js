@@ -18,7 +18,8 @@ var SL = module.exports = {
   load: function(fileName) {
     var loc = window.location.pathname;
     var dir = loc.substring(0, loc.lastIndexOf('/'));
-    var Data_string = fs.readFileSync(`${dir}/${fileName}`,  'utf8');
+    if (dir != '') {dir=`${dir}/`}
+    var Data_string = fs.readFileSync(`${dir}${fileName}`,  'utf8');
     return this.parse(Data_string)
   },
 

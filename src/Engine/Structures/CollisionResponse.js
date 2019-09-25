@@ -158,7 +158,3 @@ exports.responseWithStickyRisistance= function(collisionReport,resistance,sticky
       collisionReport.link.to.update_x_xd(gm.mult(v_incident,gm.dot(vz,v_incident)*(-stickyness)));
     }
 }
-
-exports.split=function(){};
-exports.fracture=function(){};
-exports.splitAt=function(link){};
