@@ -14,7 +14,6 @@ const Beam = engine.Beam;
 const Line = engine.Line;
 const Particle = engine.Particle;
 
-
 var canvas = document.getElementById("TestCanvas");
 var drawCtx = canvas.getContext("2d");
 var WIDTH = document.documentElement.clientWidth;

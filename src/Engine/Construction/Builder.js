@@ -144,6 +144,7 @@ module.exports =class build{
 		link1.belongsTo.joints.push(newJoint);
 		link2.belongsTo.joints.push(newJoint);
 		this.environment.constraints.push(newJoint);
+    return newJoint
 	}
 
 
@@ -177,6 +178,8 @@ module.exports =class build{
     for(var i=0;i<points.length;i++){
       points[i].belongsTo=nextConvexSet;
     }
+
+    return nextConvexSet
   }
 
 	addGlueBetweenConvexSets(convexSet1,convexSet2){
@@ -218,7 +221,7 @@ module.exports =class build{
 		var pair1=[convexSet1.links[indexPair[0]],convexSet1.links[(indexPair[0]+1)%numLinks1]];
 		var pair2=[convexSet2.links[indexPair[1]],convexSet2.links[(indexPair[1]+1)%numLinks2]];
 
-	  this.addJointBetweenLinkPairs(pair1,pair2);
+	  return this.addJointBetweenLinkPairs(pair1,pair2);
 	};
 
   //structures and features
