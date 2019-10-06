@@ -376,8 +376,8 @@ module.exports =class build{
         if(thisLaw!=="null" && thatLaw !=="null"){
           if(thisLaw==thatLaw){
               enviro.laws[thatLaw].structures.forEach(function(structure){
-              this.laws[thisLaw].structures.push(structure);
-            })
+                this.laws[thisLaw].structures.push(structure);
+              }, this)
           }else{
             this.laws[thatLaw]=enviro.laws[thatLaw];
           }
