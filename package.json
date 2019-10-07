@@ -9,6 +9,8 @@
   "scripts": {
     "test-env": "electron ./tests/test-env/main.js",
     "test-vue": "cd ./tests/vue-test && npm run dev",
+    "test-explosion": "electron ./tests/test-explosion/main.js",
+    "test-structure": "electron ./tests/test-add-remove-structure/main.js",
     "build": "babel ./src --out-dir lib",
     "prepare": "npm run build"
   },

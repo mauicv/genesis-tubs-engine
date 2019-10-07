@@ -25,7 +25,7 @@ const LawInstances= modules.getModule('lawInstances');
 module.exports =class build{
   constructor(environmentName){
     this.environment=new pl(environmentName, this);
-    this.environment.laws.finite=LawInstances["finite"];
+    this.environment.laws.finite=LawInstances["finite"](this.environment);
     this.environment.laws.gravity=LawInstances["gravity"];
     this.environment.laws.airResistance=LawInstances["airResistance"];
   }
@@ -247,75 +247,6 @@ module.exports =class build{
     this.buildOrderArrays();
   }
 
-  deleteStructure(structureA){
-    this.environment.structures.forEach(function(structureB,index){
-      if(structureB===structureA){
-        this.structures.splice(index,1);
-      }
-    },this.environment);
-  }
-
-  trueDeleteConvexSet(convexSet){
-    this.environment.convexSets.splice(convexSet.index,1);
-
-    var alBounds=convexSet.getAngleLinkIndexBounds();
-    console.log(alBounds);
-    this.environment.constraints.splice(alBounds[0],alBounds[1]-alBounds[0]+1);
-
-    var lBounds=convexSet.getLinkIndexBounds();
-    console.log(lBounds);
-    this.environment.constraints.splice(lBounds[0],lBounds[1]-lBounds[0]+1);
-
-    var pBounds=convexSet.getPointIndexBounds();
-    console.log(pBounds);
-    this.environment.points.splice(pBounds[0],pBounds[1]-pBounds[0]+1);
-
-    //relPoints and lines...
-    convexSet.graphics.forEach(function(element){
-      if(element instanceof Line){
-        this.graphics.splice(element.index,1);
-      }else if(element instanceof RelPoint){
-        this.relPoints.splice(element.index,1);
-      }
-    },this.environment);
-
-    this.recalibrateIndexing();
-    this.buildOrderArrays();
-  }
-
-  trueDeleteStructure(structureA){
-    var deadIndices=structureA.getElementIndices();
-    structureA.elements[0].belongsTo.forEach(function(structure){
-      if(structure !==structureA){
-        structure.getElementIndices().forEach(function(globInd,locInd){
-          for(var i in deadIndices){
-            if(i=globInd){
-              structure.elements.splice(locInd,1);
-            }
-          }
-        });
-      }
-    })
-
-    this.deleteStructure(structureA);
-    structureA.elements.forEach(function(element){
-      if(element instanceof ConvexSet){
-        this.trueDeleteConvexSet(element);
-      }
-    },this);
-
-    this.recalibrateIndexing();
-    this.buildOrderArrays();
-  }
-
-
-  killStructure(structureA){
-    deleteStructure(structureA);
-    structureA.elements.forEach(function(element){
-      element.kill();
-    });
-  }
-
   namesAllStructures(name){
     this.environment.structures.forEach(function(structure){
       structure.name=name;
@@ -387,6 +318,72 @@ module.exports =class build{
 
 		this.buildOrderArrays();
 	}
+
+  // Remove methods
+  removeStructureWithName(name){
+    var structure = this.environment.structures
+      .find(structure=>structure.name==name)
+    this.removeStructure(structure)
+  }
+
+  removeStructure(structureToRemove){
+    this.environment.structures = this.environment.structures
+      .filter(structure=>structure != structureToRemove)
+
+    var particlesToRemove = structureToRemove.elements
+      .filter((ele)=>ele instanceof Particle)
+
+    this.environment.constraints = this.environment.constraints
+      .filter(c=>{
+        if (c instanceof Link) return !particlesToRemove.includes(c.from)
+        return true
+      })
+
+    this.environment.points = this.environment.points
+      .filter(p=>!particlesToRemove.includes(p))
+
+    var convexSetsToRemove = structureToRemove.elements
+      .filter((ele)=>ele instanceof ConvexSet)
+
+    var linksToRemove = convexSetsToRemove
+      .reduce((acc, cur) => [...acc, ...cur.links],[])
+
+    var jointsToRemove = convexSetsToRemove
+      .reduce((acc, cur) => [...acc, ...cur.joints],[])
+
+    var gluesToRemove = convexSetsToRemove
+      .reduce((acc, cur) => [...acc, ...cur.glues],[])
+
+    var angleLinksToRemove = convexSetsToRemove
+      .reduce((acc, cur) => [...acc, ...cur.angleLinks],[])
+
+    var pointsToRemove = linksToRemove
+      .reduce((acc, cur) => [...acc, cur.from, cur.to],[])
+
+    this.environment.points = this.environment.points
+      .filter(p=>!pointsToRemove.includes(p))
+
+    this.environment.constraints = this.environment.constraints
+      .filter(c=>{
+        if (c instanceof AngleLink) return !angleLinksToRemove.includes(c)
+        if (c instanceof Joint) return !jointsToRemove.includes(c)
+        if (c instanceof Glue) return !gluesToRemove.includes(c)
+        if (c instanceof Link) return !linksToRemove.includes(c)
+        return True
+      })
+
+    this.recalibrateIndexing();
+    this.buildOrderArrays();
+  }
+
+  deleteStructure(structureA){
+    this.environment.structures.forEach(function(structureB,index){
+      if(structureB===structureA){
+        this.structures.splice(index,1);
+      }
+    },this.environment);
+  }
+
   //initialize order arrays//
 
 	buildOrderArrays(){

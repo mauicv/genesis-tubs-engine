@@ -30,13 +30,16 @@ var law = module.exports = {
     return airResistance;
   })(),
 
-	finite: (function(){
+	finite: function(enviro){
 		var finite = new Law("lifeTime");
+		finite.environment = enviro
 		finite.effects=function(){
 			this.applyToStructures(function(structure){
 				if(structure.alive){
 					if(structure.stuff.age>structure.stuff.lifeLength){
 						structure.kill();
+						finite.environment.builder
+							.removeStructure(structure)
 					}else{
 						structure.stuff.age++;
 					}
@@ -44,7 +47,7 @@ var law = module.exports = {
 			})
 		}
 		return finite;
-	})(),
+	},
 
 	boundary: function(leftWall,rightWall,downWall,upWall){
 		var boundary=new Law("boundary")

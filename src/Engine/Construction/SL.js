@@ -81,6 +81,14 @@ var SL = module.exports = {
     return build.environment;
   },
 
+  loadGTBFormat: function(fileName) {
+    var loc = window.location.pathname;
+    var dir = loc.substring(0, loc.lastIndexOf('/'));
+    if (dir != '') {dir=`${dir}/`}
+    var Data_string = fs.readFileSync(`${dir}${fileName}`,  'utf8');
+    return this.parseGTBFormat(Data_string)
+  },
+
   parseGTBFormat(Data_string){
     const pl = modules.getModule('SpaceTime');
     const builder = modules.getModule('Builder');
