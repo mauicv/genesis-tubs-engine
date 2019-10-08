@@ -18,14 +18,14 @@ module.exports = class constraint{
         "to": null
       };
 
-      if(this.from !== null){
-        data.from=this.from.index;
-        data.to=this.to.index;
-      }else{
-        data.from=this.from;
-        data.from=this.to;
-      }
-      return data;
+    if( this.from !== null ){
+      data.from=this.from.index;
+      data.to=this.to.index;
+    } else {
+      data.from=this.from;
+      data.from=this.to;
+    }
+    return data;
   }
 
   on(){

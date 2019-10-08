@@ -143,8 +143,9 @@ var GM = module.exports = {
   shuffle: function(a){
     //Fisher–Yates shuffle
     var temp;
+    var j;
     for(var i=a.length-1;i>0;i--){
-      j=Math.floor(Math.random()*i);
+      var j=Math.floor(Math.random()*i);
       temp=a[j];
       a[j]=a[i];
       a[i]=temp;
@@ -154,7 +155,7 @@ var GM = module.exports = {
   },
 
   shuffleStart: function(a){
-    j=Math.floor(Math.random()*a.length);
+    var j=Math.floor(Math.random()*a.length);
     var aNew=[];
 
     var temp;

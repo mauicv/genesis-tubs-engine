@@ -9,8 +9,8 @@ exports.convexTest= function(A,B){
   //computes collision between two convex sets each given as an array of there edge links.
   //shuffle the order of A in order to ensure flat edge sliding infractions don't occur
 
-  A=gm.shuffle(A);
-  B=gm.shuffle(B);
+  A=gm.shuffleStart(A);
+  B=gm.shuffleStart(B);
 
   var report1=XgivenW(A,B);
   var report2=XgivenW(B,A);
@@ -65,6 +65,7 @@ function Xgivenw(pointsInB,edgeInA){
 
 function XgivenW(pointsInB,edgesInA){
   var wReport=W_max(pointsInB[0].from,edgesInA);
+  var eReport;
   if(wReport.collision){
     return wReport;
   }else{

@@ -72,7 +72,7 @@ module.exports=class Grid{
 
 	constraintEffects(n){
 		for(var l=0;l<n;l++){
-			this.constraintsRunOrder=gm.shuffle(this.constraintsRunOrder);
+			// this.constraintsRunOrder=gm.shuffle(this.constraintsRunOrder);
 			this.constraintsRunOrder.forEach(function(index){
 				this[index].effect();
 			},this.constraints);

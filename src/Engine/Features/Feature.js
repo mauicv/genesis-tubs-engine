@@ -26,18 +26,19 @@ module.exports= class feature{
 	multiScan(structure1,structure2,depth){
 		var reports=[];
 		if(this.CheckBoundingRect(structure1,structure2)){
+			var report;
 			structure1.elements.forEach(function(thisElement){
 	  		structure2.elements.forEach(function(thatElement){
-	  				if(thisElement instanceof ConvexSet&&thatElement instanceof ConvexSet){
-	  					var report=cc.convexTest(thisElement.links,thatElement.links);
-	  				}else if(thisElement instanceof Particle&&thatElement instanceof ConvexSet){
+	  				if(thisElement instanceof ConvexSet && thatElement instanceof ConvexSet){
+	  					report=cc.convexTest(thisElement.links,thatElement.links);
+	  				} else if (thisElement instanceof Particle && thatElement instanceof ConvexSet){
 							report = cc.xToB(thisElement,thatElement.links);
 							report.depth=report.depth-thisElement.radius;
-						}else if(thisElement instanceof ConvexSet&&thatElement instanceof Particle){
+						} else if (thisElement instanceof ConvexSet && thatElement instanceof Particle){
 							report = cc.xToB(thatElement,thisElement.links);
 							report.depth=report.depth-thatElement.radius;
-	  				}else if(thisElement instanceof Particle&&thatElement instanceof Particle){
-							var report ={
+	  				} else if (thisElement instanceof Particle && thatElement instanceof Particle){
+							report ={
 								"type":"p2p",
 								"point1":thisElement,
 								"point2":thatElement,
@@ -70,6 +71,4 @@ module.exports= class feature{
 			return true;
 		}
 	}
-
-
 }
