@@ -372,6 +372,10 @@ module.exports =class build{
         return True
       })
 
+    Object.values(this.environment.laws)
+      .forEach(value=>value.structures = value.structures
+        .filter(structure=>structure != structureToRemove))
+
     this.recalibrateIndexing();
     this.buildOrderArrays();
   }

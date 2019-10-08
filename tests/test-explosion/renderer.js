@@ -20,21 +20,29 @@ canvas.height = HEIGHT;
 
 var enviro = builder.returnEnviro()
 
+
+
 function addBoom(){
   enviro.builder.addExplodeStucture(
-    30,7,5,1,[0,0],3000,
+    Math.floor(Math.random() * 70),
+    Math.floor(Math.random() * 70),
+    Math.floor(Math.random() * 30),
+    Math.floor(Math.random() * 10),[0,0],300,
     [WIDTH/2, HEIGHT/2],
     1,[],false
   );
+  setTimeout(addBoom, 300)
 }
 
 addBoom()
+
+drawCtx.fillStyle="black";
+drawCtx.fillRect(0,0,WIDTH,HEIGHT);
 
 window.main = function () {
   window.requestAnimationFrame( main );
   enviro.timeStep();
   draw();
-
 };
 
 
