@@ -46,6 +46,9 @@ module.exports= class point extends primative{
 		}
 	}
 
+	findCenter(){
+		return this.x
+	}
 
 	move(d){
 		this.x[0]=this.x[0]+d[0];

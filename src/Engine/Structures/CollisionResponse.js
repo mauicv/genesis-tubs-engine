@@ -28,8 +28,9 @@ exports.particleResponse= function(collisionReport,r){
     var y=collisionReport.point2.x;
     var colVector = gm.norm(gm.minus(x,y));
     //update x & y:
-    collisionReport.point1.update_x_xd(gm.mult(colVector,gm.upperBound(-collisionReport.depth/2)));
-    collisionReport.point2.update_x_xd(gm.mult(colVector,gm.upperBound(-collisionReport.depth/2)));
+    var depth = Math.abs(collisionReport.depth/2)
+    collisionReport.point1.update_x_xd(gm.mult(colVector,depth));
+    collisionReport.point2.update_x_xd(gm.mult(colVector,-depth));
 }
 
 exports.classicalResponse= function(collisionReport){

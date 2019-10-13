@@ -5,6 +5,8 @@ const cr = modules.getModule('CollisionResponse');
 const Law = modules.getModule('Law');
 const Features = modules.getModule('featureInstances');
 const Link = modules.getModule('Link');
+const ConvexSet = modules.getModule('ConvexSet');
+const Particle = modules.getModule('Particle');
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -49,6 +51,31 @@ var law = module.exports = {
 		return finite;
 	},
 
+	bowl: function(center, slope){
+		var bowl=new Law("bowl")
+		bowl.center = center
+		bowl.slope = slope
+		bowl.effects=function(){
+		 	this.applyToStructures(function(structure){
+				var elementCenter = structure.findCenter()
+				var vect = gm.norm(gm.minus(bowl.center, elementCenter))
+				var dist =  gm.size(bowl.center, elementCenter)
+				var strength = dist*dist* 0.000000001
+				structure.elements.forEach(element=>{
+					if (element instanceof ConvexSet) {
+						element.links.forEach(function(link){
+							link.from.update_x_xd(gm.mult(vect, strength))
+						})
+					} else if (element instanceof Particle) {
+						element.update_x_xd(gm.mult(vect, strength))
+					}
+				})
+
+			})
+		}
+		return bowl
+	},
+
 	boundary: function(leftWall,rightWall,downWall,upWall){
 		var boundary=new Law("boundary")
 		boundary.effects=function(){
@@ -56,36 +83,43 @@ var law = module.exports = {
 				var center = structure.findCenter()
 				if(center[0]>rightWall){
 					structure.elements.forEach(function(element){
-						element.links.forEach(function(link){
-							link.from.update_x_xd([-rightWall,0])
-							link.from.update_x_old_xd([-rightWall,0])
-						})
+						teleportElement(element, [-rightWall, 0])
 					})
-				}else if(center[0]<leftWall){
+				} else if(center[0]<leftWall){
 					structure.elements.forEach(function(element){
-						element.links.forEach(function(link){
-							link.from.update_x_xd([rightWall,0])
-							link.from.update_x_old_xd([rightWall,0])
-						})
+						teleportElement(element, [rightWall, 0])
 					})
-				}else if(center[1]>upWall){
+				} else if(center[1]>upWall){
 					structure.elements.forEach(function(element){
-						element.links.forEach(function(link){
-							link.from.update_x_xd([0,-upWall])
-							link.from.update_x_old_xd([0,-upWall])
-						})
+						teleportElement(element, [0, -upWall])
 					})
-				}else if(center[1]<downWall){
+				} else if(center[1]<downWall){
 					structure.elements.forEach(function(element){
-						element.links.forEach(function(link){
-							link.from.update_x_xd([0,upWall])
-							link.from.update_x_old_xd([0,upWall])
-						})
+						teleportElement(element, [0, upWall])
 					})
 				}
 			})
 		}
 		return boundary
 	},
+}
 
+function teleportElement(element, point){
+	if (element instanceof ConvexSet) {
+		teleportConvexSet(element, point)
+	} else if (element instanceof Particle) {
+		teleportParticle(element, point)
+	}
+}
+
+function teleportConvexSet(element, point){
+	element.links.forEach(function(link){
+		link.from.update_x_xd(point)
+		link.from.update_x_old_xd(point)
+	})
+}
+
+function teleportParticle(element, point){
+	element.update_x_xd(point)
+	element.update_x_old_xd(point)
 }

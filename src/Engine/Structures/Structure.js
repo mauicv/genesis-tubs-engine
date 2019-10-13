@@ -65,7 +65,9 @@ module.exports=class structure extends primative{
     this.elements.forEach(function(element){
       if(element instanceof ConvexSet){
         xAv=gm.add(xAv,element.findCenter());
-      }
+      } else if (element instanceof Particle) {
+				xAv=gm.add(xAv,element.findCenter());
+			}
     });
     return gm.dev(xAv,this.elements.length);
 	}
@@ -132,8 +134,8 @@ module.exports=class structure extends primative{
 	randomNudges(force){
 		var v=[]
 		this.elements.forEach(function(element){
+			v=[(Math.random()-0.5)*force,(Math.random()-0.5)*force]
 			if(element instanceof ConvexSet){
-				v=[(Math.random()-0.5)*force,(Math.random()-0.5)*force]
 				element.nudge(v)
 			}else if(element instanceof Particle){
 				element.update_x_xd(v)

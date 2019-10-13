@@ -108,6 +108,10 @@ var GM = module.exports = {
     return [x[0]*d,x[1]*d];
   },
 
+  multVec: function(x,v){
+    return [x[0]*v[0],x[1]*v[1]];
+  },
+
   neg: function(x){
     return [-x[0],-x[1]];
   },

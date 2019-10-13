@@ -1,6 +1,6 @@
 {
   "name": "genesis-tubs-engine",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "---",
   "main": "./src/index.js",
   "directories": {
@@ -11,6 +11,8 @@
     "test-vue": "cd ./tests/vue-test && npm run dev",
     "test-explosion": "electron ./tests/test-explosion/main.js",
     "test-structure": "electron ./tests/test-add-remove-structure/main.js",
+    "test-graphics": "electron ./tests/test-graphics/main.js",
+    "test-gas": "electron ./tests/test-gas/main.js",
     "build": "babel ./src --out-dir lib",
     "prepare": "npm run build"
   },

@@ -85,6 +85,10 @@ module.exports= class convexSet extends primative{
 		})
 	}
 
+	getPoints(){
+		return this.links.reduce((acc, cur) => [...acc, cur.to], [])
+	}
+
 	getPointIndexBounds(){
 		var MinMax = gm.getIntListBounds(this.links.map(link=>link.from.index));
 		return MinMax
