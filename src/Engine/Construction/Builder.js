@@ -470,6 +470,25 @@ module.exports =class build{
     });
   }
 
-  cleanEnvironment(){};
+  cleanEnvironment(){
+    this.environment.name=null;
+    this.environment.points=[];
+    this.environment.constraints=[]
+    this.environment.convexSets=[];
+    this.environment.structures=[];
+    this.environment.relPoints=[];
+    this.environment.graphics=[];
+    this.environment.laws={};
+    this.environment.builder=null;
+    this.environment.time=0;
+    this.environment.realCenter=null;
+    this.environment.relativeCenter=[];
+    this.environment.constraintsRunOrder=[];
+    this.environment.localRate=2;
+    this.environment.globalRate=2;
+    this.environment.totalRate=5;
+    this.environment.stuff={};
+    this.environment.builder=this;
+  };
 
 }
