@@ -2,7 +2,7 @@
 
 # genesis-tubs-engine
 
-> Physics engine built in Javascript. Genesis-tubs is a reference to the Simpsons episode in which Lisa puts her tooth in coke for a science project and indivertibly creates life.  
+> Physics engine built in Javascript. Genesis-tubs is a reference to the Simpsons episode in which Lisa puts her tooth in coke for a science project and inadvertently creates life.  
 
 **Note: this project is poorly and only sporadically maintained**
 
