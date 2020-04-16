@@ -16,8 +16,13 @@ var SL = module.exports = {
   },
 
   load: function(fileName) {
-    var loc = window.location.pathname;
-    var dir = loc.substring(0, loc.lastIndexOf('/'));
+    var dir = ''
+    try {
+      var loc = window.location.pathname;
+      dir = loc.substring(0, loc.lastIndexOf('/'));
+    } catch (_){
+      console.log(_)
+    }
     if (dir != '') {dir=`${dir}/`}
     var Data_string = fs.readFileSync(`${dir}${fileName}`,  'utf8');
     return this.parse(Data_string)
@@ -82,8 +87,9 @@ var SL = module.exports = {
   },
 
   loadGTBFormat: function(fileName) {
+    var dir = ''
     var loc = window.location.pathname;
-    var dir = loc.substring(0, loc.lastIndexOf('/'));
+    dir = loc.substring(0, loc.lastIndexOf('/'));
     if (dir != '') {dir=`${dir}/`}
     var Data_string = fs.readFileSync(`${dir}${fileName}`,  'utf8');
     return this.parseGTBFormat(Data_string)
