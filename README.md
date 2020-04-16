@@ -27,7 +27,7 @@ Environments are created easiest with the [genesis-tubs-builder](https://github.
 
 ### Examples:
 
-No real tests have been implemented. To run a example implementation within a electron application use:
+No real tests have been implemented. To run an example simulation within a electron application use:
 
 ```sh
 npm run test-env
@@ -38,4 +38,13 @@ To run a example implementation within a vue SPA use:
 ```sh
 npm run test-vue
 
+```
+
+Other tests/examples include:
+```sh
+npm run test-memory-clean
+npm run test-explosion
+npm run test-structure
+npm run test-graphics
+npm run test-gas
 ```
